@@ -16,7 +16,19 @@ module.exports = {
     // tells where to emit the bundle it creates
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: '[name].[contenthash].js',
+        filename: '[name].[contenthash].js'
+    },
+
+    devServer: {
+        port: 3000
+    },
+
+    resolve: {
+        extensions: ['.js', '.json', '.png', '.png'],
+        alias: {
+            'models': path.resolve(__dirname, './src/models'),
+            '@': path.resolve(__dirname, 'src')
+        }
     },
 
     // it generates files and removes them depending on the purposes after each build
@@ -34,6 +46,23 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader','css-loader']
+            },
+            {
+                test: /\.(png|jpg|svg|gif)$/,
+                use: ['file-loader']
+            },
+            {
+                test: /\.(ttf|woff|woff2|eot)$/,
+                include: [path.resolve(__dirname, './assets/fonts')],
+                use: ['file-loader']
+            },
+            {
+                test: /\.xml$/,
+                use: ['xml-loader']
+            },
+            {
+                test: /\.csv$/,
+                use: ['csv-loader']
             }
         ]
     }
